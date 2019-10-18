@@ -1,5 +1,6 @@
 import hash_functions
 
+
 class LinearProbe:
     def __init__(self, N, hash_fucntion):
         self.hash_fucntion = hash_fucntion
@@ -13,6 +14,7 @@ class LinearProbe:
         start_hash = self.hash_fucntion(key, self.N)
         pass
 
+
 class ChainedHash:
     def __init__(self, N, hash_fucntion):
         self.hash_fucntion = hash_fucntion
@@ -25,5 +27,3 @@ class ChainedHash:
     def search(self, key):
         start_hash = self.hash_fucntion(key, self.N)
         pass
-
-
