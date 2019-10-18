@@ -1,3 +1,5 @@
+import argparse
+
 
 def h_ascii(key, table_size):
     """
@@ -68,3 +70,25 @@ def h_rolling(key, table_size, p=53, m=2**64):
 
     # Return error code
     return -1
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='Calculate hash data from a file.')
+    parser.add_argument(
+        '--input_file',
+        type=str,
+        help='The file name of the data')
+    parser.add_argument(
+        '--hash_function',
+        type=str,
+        help='The function name of the hash type')
+
+    args = parser.parse_args()
+
+    for l in open(args.input_file):
+        if args.hash_function == 'ascii':
+            print(h_ascii(l, 1000))
+        elif args.hash_function == 'rolling':
+            print(h_rolling(l, 1000))
