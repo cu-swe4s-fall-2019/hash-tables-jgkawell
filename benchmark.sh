@@ -10,8 +10,6 @@ for M in $( seq  1000 1000 10000 ); do
     python hash_tables.py --table_size 10000 --hash_alg ascii --collision_strategy linear --data_file_name rand_words.txt --keys_to_add $M >  ascii_linear_rand.$M.txt
 done
 
-grep insert ascii_linear_rand.*.txt | cut -d " " -f2,3 | python scatter.py --out_file linear_insert_time.png --x_label "Load factor" --y_label "Insert time"
-
 (for M in $( seq  1000 1000 10000 ); do
     load_factor=$(bc -l <<< "$M/10000")
     echo -n "$load_factor " 
@@ -21,8 +19,6 @@ done) | python scatter.py --out_file ascii_search_time.png --x_label "Load facto
 for M in $( seq  1000 1000 10000 ); do
     python hash_tables.py --table_size 10000 --hash_alg rolling --collision_strategy linear --data_file_name rand_words.txt --keys_to_add $M >  rolling_linear_rand.$M.txt
 done
-
-grep insert rolling_linear_rand.*.txt | cut -d " " -f2,3 | python scatter.py --out_file rolling_insert_time.png --x_label "Load factor" --y_label "Insert time"
 
 (for M in $( seq  1000 1000 10000 ); do
     load_factor=$(bc -l <<< "$M/10000")
