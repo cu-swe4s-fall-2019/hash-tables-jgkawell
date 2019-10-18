@@ -173,5 +173,6 @@ class TestHashTables(unittest.TestCase):
         for k, v in entries.items():
             self.assertEqual(hash_table.search(k), v)
 
+
 if __name__ == '__main__':
     unittest.main()
