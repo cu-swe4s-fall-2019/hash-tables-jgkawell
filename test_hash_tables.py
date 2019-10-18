@@ -77,6 +77,20 @@ class TestHashTables(unittest.TestCase):
             hash_table.search(
                 "This is a key that is very unlikely to be generated"), None)
 
+    def test_linear_probe_rehashing(self):
+        size = 100
+        hash_table = hash_tables.LinearProbe(size, hf.h_ascii)
+
+        entries = {}
+        for i in range(int(size * 2)):
+            key = ''.join(r.choices(s.ascii_uppercase + s.digits, k=100))
+            value = ''.join(r.choices(s.ascii_uppercase + s.digits, k=100))
+            entries[key] = value
+            self.assertTrue(hash_table.add(key, value))
+
+        for k, v in entries.items():
+            self.assertEqual(hash_table.search(k), v)
+
     """ Test Chained Hash """
 
     def test_chained_hash_ascii_basic(self):
@@ -145,6 +159,19 @@ class TestHashTables(unittest.TestCase):
             hash_table.search(
                 "This is a key that is very unlikely to be generated"), None)
 
+    def test_chained_hash_rehashing(self):
+        size = 100
+        hash_table = hash_tables.ChainedHash(size, hf.h_ascii)
+
+        entries = {}
+        for i in range(int(size * 2)):
+            key = ''.join(r.choices(s.ascii_uppercase + s.digits, k=100))
+            value = ''.join(r.choices(s.ascii_uppercase + s.digits, k=100))
+            entries[key] = value
+            self.assertTrue(hash_table.add(key, value))
+
+        for k, v in entries.items():
+            self.assertEqual(hash_table.search(k), v)
 
 if __name__ == '__main__':
     unittest.main()
