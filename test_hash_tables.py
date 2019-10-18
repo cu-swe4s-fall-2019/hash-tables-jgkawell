@@ -12,7 +12,7 @@ class TestHashTables(unittest.TestCase):
     """ Test Linear Probe """
 
     def test_linear_probe_ascii_basic(self):
-        size = 100
+        size = 10000
         hash_table = hash_tables.LinearProbe(size, hf.h_ascii)
 
         entries = {}
@@ -26,7 +26,7 @@ class TestHashTables(unittest.TestCase):
             self.assertEqual(hash_table.search(k), v)
 
     def test_linear_probe_rolling_basic(self):
-        size = 100
+        size = 10000
         hash_table = hash_tables.LinearProbe(size, hf.h_rolling)
 
         entries = {}
@@ -78,7 +78,7 @@ class TestHashTables(unittest.TestCase):
                 "This is a key that is very unlikely to be generated"), None)
 
     def test_linear_probe_rehashing(self):
-        size = 100
+        size = 1000
         hash_table = hash_tables.LinearProbe(size, hf.h_ascii)
 
         entries = {}
@@ -94,7 +94,7 @@ class TestHashTables(unittest.TestCase):
     """ Test Chained Hash """
 
     def test_chained_hash_ascii_basic(self):
-        size = 100
+        size = 10000
         hash_table = hash_tables.ChainedHash(size, hf.h_ascii)
 
         entries = {}
@@ -108,7 +108,7 @@ class TestHashTables(unittest.TestCase):
             self.assertEqual(hash_table.search(k), v)
 
     def test_chained_hash_rolling_basic(self):
-        size = 100
+        size = 10000
         hash_table = hash_tables.ChainedHash(size, hf.h_rolling)
 
         entries = {}
@@ -160,7 +160,7 @@ class TestHashTables(unittest.TestCase):
                 "This is a key that is very unlikely to be generated"), None)
 
     def test_chained_hash_rehashing(self):
-        size = 100
+        size = 1000
         hash_table = hash_tables.ChainedHash(size, hf.h_ascii)
 
         entries = {}
