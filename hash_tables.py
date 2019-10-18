@@ -40,7 +40,12 @@ class LinearProbe:
         if (self.num_elements / self.table_size) > 0.7:
             self.rehash()
 
-        return success
+        # If the insert failed, rehash and insert again
+        if not success:
+            self.rehash()
+            return self.add(key, value)
+        else:
+            return True
 
     def search(self, key):
         try:
