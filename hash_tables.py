@@ -1,4 +1,7 @@
+import argparse
 import copy
+import random
+import time
 
 from hash_functions import h_ascii
 from hash_functions import h_rolling
@@ -131,3 +134,80 @@ class ChainedHash:
             if len(old_table[i]) > 0:
                 for k, v in old_table[i]:
                     self.add(k, v)
+
+
+def reservoir_sampling(new_val, size, V):
+    if len(V) < size:
+        V.append(new_val)
+    else:
+        j = random.randint(0, len(V))
+        if j < len(V):
+            V[j] = new_val
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='Calculate hash data from a file.')
+    parser.add_argument(
+        '--table_size',
+        type=int,
+        help='The initial size of the hash table')
+    parser.add_argument(
+        '--hash_alg',
+        type=str,
+        help='The function name of the hash type')
+    parser.add_argument(
+        '--collision_strategy',
+        type=str,
+        help='The collision strategy (linear/chain)')
+    parser.add_argument(
+        '--data_file_name',
+        type=str,
+        help='The name of the data file')
+    parser.add_argument(
+        '--keys_to_add',
+        type=int,
+        help='The number of keys to hash')
+
+    args = parser.parse_args()
+
+    N = args.table_size
+    hash_alg = args.hash_alg
+    collision_strategy = args.collision_strategy
+    data_file_name = args.data_file_name
+    keys_to_add = args.keys_to_add
+
+    ht = None
+
+    if hash_alg == 'ascii':
+
+        if collision_strategy == 'linear':
+            ht = LinearProbe(N, h_ascii)
+        elif collision_strategy == 'chain':
+            ht = ChainedHash(N, h_ascii)
+
+    elif hash_alg == 'rolling':
+
+        if collision_strategy == 'linear':
+            ht = LinearProbe(N, h_rolling)
+        elif collision_strategy == 'chain':
+            ht = ChainedHash(N, h_rolling)
+
+    keys_to_search = 100
+    V = []
+
+    for l in open(data_file_name):
+        reservoir_sampling(l, keys_to_search, V)
+        t0 = time.time()
+        ht.add(l, l)
+        t1 = time.time()
+        print('add', ht.num_elements/ht.table_size, t1 - t0)
+        if ht.num_elements == keys_to_add:
+            break
+
+    for v in V:
+        t0 = time.time()
+        r = ht.search(v)
+        t1 = time.time()
+        print('search', t1 - t0)
