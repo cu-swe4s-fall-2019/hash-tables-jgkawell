@@ -4,6 +4,7 @@ import random
 import os
 import numpy as np
 
+
 class TestHashFunctions(unittest.TestCase):
 
     def test_ascii_basic(self):
