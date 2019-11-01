@@ -11,6 +11,7 @@ class LinearProbe:
     def __init__(self, table_size, hash_function):
         self.hash_function = hash_function
         self.table_size = table_size
+        self.key_list = []
         try:
             self.table = [None for i in range(self.table_size)]
         except TypeError:
@@ -48,6 +49,7 @@ class LinearProbe:
             self.rehash()
             return self.add(key, value)
         else:
+            self.key_list.append(key)
             return True
 
     def search(self, key):
@@ -85,6 +87,7 @@ class ChainedHash:
     def __init__(self, table_size, hash_function):
         self.hash_function = hash_function
         self.table_size = table_size
+        self.key_list = []
         try:
             self.table = [[] for i in range(self.table_size)]
         except TypeError:
@@ -108,6 +111,7 @@ class ChainedHash:
         if (self.num_elements / self.table_size) > 0.7:
             self.rehash()
 
+        self.key_list.append(key)
         return True
 
     def search(self, key):
